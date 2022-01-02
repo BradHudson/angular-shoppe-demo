@@ -31,7 +31,7 @@ export class CheckoutComponent implements OnInit {
     this.items$ = this.cartService.getItems();
     const checkoutButton = document.querySelector('.checkout-button');
     checkoutButton.addEventListener('fullstory/rageclick', function (event:any) {
-      this.fullStoryService.rageClick(event.detail);
+      FullStory.event(event.type, event["detail"]);
     });
   }
 
