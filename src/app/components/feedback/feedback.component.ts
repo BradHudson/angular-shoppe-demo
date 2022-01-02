@@ -20,6 +20,11 @@ export class FeedbackComponent {
 
   @HostListener('window:feedback_submitted', ['$event'])
   feedbackSubmittedEventListener(event:CustomEvent) {
+      this.fullStoryService.userVars({
+        displayName : 'Brad Hudson',
+        email : 'bradrayhudson@gmail.com',
+        pricingPlan : 'free',
+       });
       this.fullStoryService.customEvent(event);
   }
 
