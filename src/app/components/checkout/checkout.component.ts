@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { Observable } from 'rxjs';
@@ -6,6 +6,8 @@ import { first } from 'rxjs/operators'
 import { Product, State, states } from 'src/app/models';
 import { CartService } from 'src/app/services';
 import { DatalayerService } from 'src/app/services/datalayer.service';
+import { FullStoryService } from 'src/app/services/fullstory.service';
+import * as FullStory from '@fullstory/browser';
 
 @Component({
   selector: 'app-checkout',
@@ -16,17 +18,21 @@ export class CheckoutComponent implements OnInit {
 
   items$: Observable<Product[]>;
   shippableStates: State[] = states;
+  fullStoryService: FullStoryService
 
   constructor(
     private cartService: CartService,
     private datalayer: DatalayerService,
-    private router: Router,
+    private router: Router, 
   ) {
-
   }
 
   ngOnInit() {
     this.items$ = this.cartService.getItems();
+    const checkoutButton = document.querySelector('.checkout-button');
+    checkoutButton.addEventListener('fullstory/rageclick', function (event:any) {
+      this.fullStoryService.rageClick(event.detail);
+    });
   }
 
   /**

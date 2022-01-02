@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { FullStoryService } from 'src/app/services/fullstory.service';
 
 export interface FeedbackData {
   nps: number; // net promoter score
@@ -14,7 +15,13 @@ export interface FeedbackData {
 })
 export class FeedbackComponent {
 
-  constructor(public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog, private fullStoryService: FullStoryService) { 
+  }
+
+  @HostListener('window:feedback_submitted', ['$event'])
+  feedbackSubmittedEventListener(event:CustomEvent) {
+      this.fullStoryService.customEvent(event);
+  }
 
   openDialog(): void {
     const dialogRef = this.dialog.open(FeedbackDialog, {
@@ -28,6 +35,8 @@ export class FeedbackComponent {
       window.dispatchEvent(new CustomEvent('feedback_submitted', { detail: { nps, osat, comments } }));
     });
   }
+
+  
 }
 
 @Component({

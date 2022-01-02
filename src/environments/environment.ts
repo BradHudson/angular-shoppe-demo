@@ -14,7 +14,7 @@ export const environment = {
   localApiRoot: '/assets',
   remoteApiRoot: 'http://localhost:3000/api',
   useMockApi: true,
-  orgId: '',
+  orgId: '17CETG',
   firebase: {
     // optionally add your firebase config here
   }
